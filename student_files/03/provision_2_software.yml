@@ -1,9 +1,13 @@
 ---
 - name: install httpd
-  yum:
+  package:
     name:
       - httpd
-      - iptables-services
-      - git
     state: present
   when: ansible_distribution == 'CentOS'
+- name: install apache
+  package:
+    name:
+      - apache2
+    state: present
+  when: ansible_distribution == 'Ubuntu'
