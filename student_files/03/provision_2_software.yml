@@ -11,3 +11,46 @@
       - apache2
     state: present
   when: ansible_distribution == 'Ubuntu'
+  
+tasks:
+  - user:
+      name: usr1
+      state: present
+      groups: wheel
+  - user:
+      name: usr2
+      state: present
+      groups: wheel
+      
+tasks:
+  - user:
+      name: "{{ item }}"
+      state: present
+      groups: wheel
+    loop:
+      - usr1
+      - usr2
+      
+vars:
+  users:
+    - usr1
+    - usr2
+tasks:
+  - user:
+      name: "{{ item }}"
+      state: present
+      groups: wheel
+    loop: "{{ users }}"
+    
+vars:
+  users:
+    - usr1
+    - usr2
+tasks:
+  - user:
+      name: "{{ usr }}"
+      state: present
+      groups: wheel
+    loop: "{{ users }}“
+    loop_control:
+      loop_var: usr    
